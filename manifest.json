@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "X.com GPT Reply",
+  "version": "1.1",
+  "description": "Add GPT-powered reply suggestions to X.com posts",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "storage"
+  ],
+  
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://x.com/*",
+    "https://reply-bot-server.vercel.app/*",
+    "https://replybot-server.vercel.app/*",
+    "http://192.168.106.37:8080/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://x.com/*", "*://twitter.com/*","http://192.168.106.37:8080/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["shadcn-components.js"],
+      "matches": ["*://x.com/*", "*://twitter.com/*","http://192.168.106.37:8080/*"]
+    }
+  ]
+}
