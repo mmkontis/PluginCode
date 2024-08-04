@@ -2,12 +2,15 @@
   "manifest_version": 3,
   "name": "X.com GPT Reply",
   "version": "1.1",
+  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq+sv4vodxHdeDluzGeBu1Z0mIcuLHfXODi9vY3MLddfKJ7sCEjNk48W6lOtsGkkpS0j9FUfGYqmdFoe9gFBh3VQa/IoktmMfmsfI+8NaGjJg4a5cSoPSem4vStomulUBDY2J6WnX+ek2druFKQR69g4TuaiXfNyE7OWOOcAJ3QWzWKDkVsLhHshdfP9HwJkhUeQRGXC/gKkPNIDRjDN238rocMoWexhv8WPxvqDw4S4KAukaNpy3GQKXGxT2CdCx8XoEZ8QqeZRvtcnHVrj3VGAAndF1mEKA9pKPaDGelYfbx6C+cKyL1RBjA9Zd86ERhV4rlLSwYkmdsV2NgpWYhQIDAQAB",
   "description": "Add GPT-powered reply suggestions to X.com posts",
   "permissions": [
     "activeTab",
     "scripting",
     "clipboardWrite",
-    "storage"
+    "storage",
+    "identity",
+    "tabs"
   ],
   
   "host_permissions": [
@@ -33,8 +36,22 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["shadcn-components.js"],
-      "matches": ["*://x.com/*", "*://twitter.com/*","http://192.168.106.37:8080/*"]
+      "resources": ["shadcn-components.js","popup.js"],
+      "matches": ["*://x.com/*", "*://twitter.com/*","http://192.168.106.37:8080/*"],
+      "type":"module"
     }
-  ]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-eval'; child-src 'self';"
+  },
+  "oauth2": {
+    "client_id": "260056260511-dl8c70eq4rc0a8dj1ajm42arih978rq8.apps.googleusercontent.com.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  }
+ 
+
 }

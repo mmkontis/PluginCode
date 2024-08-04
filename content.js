@@ -20,6 +20,31 @@ function injectGPTReplyButton(tweet) {
   }
 }
 
+
+
+
+
+function checkAuthStatus() {
+  return new Promise((resolve) => {
+    chrome.runtime.sendMessage({action: "checkAuth"}, (response) => {
+      resolve(response.isAuthenticated);
+    });
+  });
+}
+
+
+function handleLogin() {
+  chrome.runtime.sendMessage({action: "login"}, (response) => {
+    if (response.success) {
+      console.log("Login successful");
+      // Refresh the page or reinject buttons
+      location.reload();
+    } else {
+      console.error("Login failed:", response.error);
+    }
+  });
+}
+
 // Function to open reply with style buttons
 function openReplyWithStyles(tweet) {
   console.log('openReplyWithStyles called');
@@ -213,6 +238,7 @@ const observer = new MutationObserver(mutations => {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const tweets = node.querySelectorAll('[data-testid="tweet"]');
         tweets.forEach(injectGPTReplyButton);
+        injectLoginButton();
       }
     }
   }
@@ -231,6 +257,3 @@ function injectStyles() {
   link.rel = 'stylesheet';
   document.head.appendChild(link);
 }
-
-// Call these functions when your script starts
-injectStyles();
