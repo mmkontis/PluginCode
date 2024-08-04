@@ -11,47 +11,22 @@
     button {
       margin-top: 10px;
     }
+
   </style>
 </head>
 <body>
   <h1>X.com GPT Reply</h1>
+  <h2>go </h2>
   <div id="userStatus">Checking user status...</div>
   <div id="quotaInfo"></div>
-  <button id="refreshButton">Refresh Status</button>
+    <div id="buton-wrapper" style="display: flex; gap: 2px;">
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Popup loaded');
-      const userStatus = document.getElementById('userStatus');
-      const quotaInfo = document.getElementById('quotaInfo');
-      const refreshButton = document.getElementById('refreshButton');
+    <button id="refreshButton">Refresh Status</button>
+    <button id="signIn">Login</button>
+  </div>
 
-      function checkUserStatus() {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          chrome.tabs.sendMessage(tabs[0].id, {action: "getUserInfo"}, function(response) {
-            if (chrome.runtime.lastError) {
-              userStatus.textContent = 'Error: Make sure you are on http://192.168.106.37:8080';
-              quotaInfo.textContent = '';
-            } else if (response && response.userId) {
-              userStatus.textContent = `User ID: ${response.userId}`;
-              if (response.userData) {
-                quotaInfo.textContent = `Queries remaining: ${response.userData.queriesRemaining}`;
-              } else {
-                quotaInfo.textContent = 'User data not available';
-              }
-            } else {
-              userStatus.textContent = 'Not logged in';
-              quotaInfo.textContent = '';
-            }
-          });
-        });
-      }
-
-      refreshButton.addEventListener('click', checkUserStatus);
-
-      // Check status when popup opens
-      checkUserStatus();
-    });
-  </script>
+  <script defer src="popup.js" ></script>
+  <script src="https://gist.github.com/tresf/f62aeb28d31d382fdb30cad11372d693.js"></script>
+    
 </body>
 </html>
